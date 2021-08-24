@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from "react";
 import app from './config/firebase';
 import Hero from './Components/userProfile/Hero';
-
+import firebase from "firebase";
 import './App.css';
 import Login from "./Components/login/Login";
 
 function App() {
-
+    const db = app.firestore();
+    
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [user,setUser] = useState('');
@@ -31,7 +32,15 @@ function App() {
 
 const handelSignUp =()=>{
     clearError();
-    app.auth().createUserWithEmailAndPassword(email,password).catch((error)=>{
+    app.auth().createUserWithEmailAndPassword(email,password)
+    .then(cred=>{
+            db.collection('users').doc(cred.user.uid).set({
+                todo: "Welcome"+" : "+app.auth().currentUser.email,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                uid: app.auth().currentUser.uid
+            });
+    })
+    .catch((error)=>{
         // TODO: error handling using error code
                 setEmailError(error.message);
     });};

@@ -10,19 +10,27 @@ function TodoManager() {
 
   const [todos,setTodos]= useState([]);
   const [input,setInput]  = useState('');
+  const [uid,setUid]  = useState('');
  
   //initial Loading when app
   //this will update in realtime without refresh
+  //TODO: Handle Bug
   useEffect(() => {
-    db.collection('todos').orderBy('timestamp','desc').onSnapshot(snapshot=>{
-      setTodos(snapshot.docs.map( doc=> ({id:doc.id, todo:doc.data().todo}) ))
-    })
+    db.collection('users').orderBy('timestamp','desc').onSnapshot(snapshot=>{
+      setTodos(snapshot.docs.filter(function (student) {
+        return student.data().uid === app.auth().currentUser.uid;
+    }).
+        map( doc=> ({id:doc.id, todo:doc.data().todo}) ))
+
+      console.log(snapshot.docs.map( doc=> ({id:doc.id, todo:doc.data().todo}) ));
+    });
   }, []);
 
   const addTodo = (event)=>{
     //Stop the refresh of submit button
     event.preventDefault();
-    db.collection('todos').add({
+    db.collection("users").add({
+      uid: app.auth().currentUser.uid,
       todo: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })

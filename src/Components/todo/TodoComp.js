@@ -9,7 +9,7 @@ function TodoComp(props) {
             <ListItem >
                 <ListItemText primary={props.todo.todo} secondary="Deadline 🕰️">
                 </ListItemText>
-            <DeleteSweepIcon onClick={event  => db.collection('todos').doc(props.todo.id).delete()} variant="contained" color="primary"></DeleteSweepIcon>
+            <DeleteSweepIcon onClick={event  => db.collection('users').doc(props.todo.id).delete()} variant="contained" color="primary"></DeleteSweepIcon>
             </ListItem>
             
         </div>
