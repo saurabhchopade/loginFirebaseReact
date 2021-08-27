@@ -27,7 +27,14 @@ function App() {
       clearError();
       app.auth().signInWithEmailAndPassword(email,password).catch((error)=>{
           // TODO: error handling using error code
+          switch(error){
+              case "auth/email-already-exists":
+                  setEmailError(error.message);
+                  break;
+            default:
                 setEmailError(error.message);
+                break;
+          }
     });};
 
 const handelSignUp =()=>{
@@ -60,6 +67,27 @@ useEffect(()=>{
     authListener();
 },[]);
 
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider()
+
+const signInWithGoogle = () => {
+    auth.signInWithPopup(googleProvider).then((res) => {
+        console.log(res.user)
+    }).catch((error) => {
+        setEmailError(error.message);
+    })
+};
+
+const GithubProvider = new firebase.auth.GithubAuthProvider()
+
+const signInWithGithub = () => {
+  auth.signInWithPopup(GithubProvider).then((res) => {
+    console.log(res.user)
+  }).catch((error) => {
+    setEmailError(error.message);
+})
+};
+
   return (
         <div>
           {
@@ -77,6 +105,8 @@ useEffect(()=>{
                 hasAccount    ={hasAccount}
                 setHasAccount ={setHasAccount}
                 emailError    ={emailError}
+                googleLogin    ={signInWithGoogle}
+                githubLogin    ={signInWithGithub}
                 />
               )
           }  

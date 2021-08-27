@@ -9,6 +9,8 @@ function Login(props) {
         hasAccount    ,
         setHasAccount ,
         emailError    ,
+        googleLogin   ,
+        githubLogin
          }=props;
 
     return(
@@ -41,6 +43,32 @@ function Login(props) {
                         <>
                         <button onClick={handlelSignUp}>Sign up</button>
                         <p>Have an Account ? <span span onClick={()=>setHasAccount(!hasAccount)}>Sign In</span> </p>
+                     </>
+                     ) 
+                     };
+
+             </div>
+             <div className="btnContainer">
+                 {hasAccount ? (
+                     <>
+                        <button onClick={googleLogin}>Sign in with Google</button>
+                     </>
+                     ):(
+                        <>
+                        <button onClick={googleLogin}>Sign in with Google</button>
+                     </>
+                     ) 
+                     };
+
+             </div>
+             <div className="btnContainer">
+                 {hasAccount ? (
+                     <>
+                        <button onClick={githubLogin}>Sign in with GitHub</button>
+                     </>
+                     ):(
+                        <>
+                        <button onClick={githubLogin}>Sign in with GitHub</button>
                      </>
                      ) 
                      };
