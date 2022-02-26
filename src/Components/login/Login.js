@@ -37,7 +37,7 @@ function Login(props) {
                  {hasAccount ? (
                      <>
                         <button onClick={handleLogin}>Sign In</button>
-                        <p>Dont Have an Account ? <span onClick={()=>setHasAccount(!hasAccount)}>Sign Up</span> </p>
+                        <p>Dont Have an Account ? <span onClick={ ()=>setHasAccount(!hasAccount)}>Sign Up</span> </p>
                      </>
                      ):(
                         <>
